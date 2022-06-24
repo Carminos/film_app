@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   Divider,
   List,
@@ -10,11 +11,10 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/styles";
-import { useDispatch, useSelector } from "react-redux";
 
 import { useGetGenresQuery } from "../../services/TMDB";
 import useStyles from "./styles";
-import genresIcons from "../../assets/genres";
+import genreIcons from "../../assets/genres";
 
 const categories = [
   { label: "Popular", value: "popular" },
@@ -22,17 +22,16 @@ const categories = [
   { label: "Upcoming", value: "upcoming" },
 ];
 
+const redLogo =
+  "https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png";
 const blueLogo =
   "https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png";
 
-const redLogo =
-  "https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png";
-
-function Sidebar({ setMobileOpen }) {
+// Sidebar will accept one prop because we're passing it through setMobileOpen (Navbar file)
+const Sidebar = ({ setMobileOpen }) => {
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
-  const dispatch = useDispatch();
 
   console.log(data);
 
@@ -42,7 +41,7 @@ function Sidebar({ setMobileOpen }) {
         <img
           className={classes.image}
           src={theme.palette.mode === "light" ? redLogo : blueLogo}
-          alt="filmpire logo"
+          alt="Filmpire logo"
         />
       </Link>
       <Divider />
@@ -53,7 +52,7 @@ function Sidebar({ setMobileOpen }) {
             <ListItem onClick={() => {}} button>
               <ListItemIcon>
                 <img
-                  src={genresIcons[label.toLowerCase()]}
+                  src={genreIcons[label.toLowerCase()]}
                   className={classes.genreImages}
                   height={30}
                 />
@@ -76,12 +75,12 @@ function Sidebar({ setMobileOpen }) {
               <ListItem onClick={() => {}} button>
                 <ListItemIcon>
                   <img
-                    src={genresIcons[name.toLowerCase()]}
+                    src={genreIcons[label.toLowerCase()]}
                     className={classes.genreImages}
                     height={30}
                   />
                 </ListItemIcon>
-                <ListItemText primary={name} />
+                <ListItemText primary={label} />
               </ListItem>
             </Link>
           ))
@@ -89,6 +88,6 @@ function Sidebar({ setMobileOpen }) {
       </List>
     </>
   );
-}
+};
 
 export default Sidebar;
