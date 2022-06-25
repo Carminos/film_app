@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 
+import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 import { useGetGenresQuery } from "../../services/TMDB";
 import useStyles from "./styles";
 import genresIcons from "../../assets/genres";
@@ -28,7 +29,7 @@ const blueLogo =
 const redLogo =
   "https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png";
 
-function Sidebar({ setMobileOpen }) {
+const Sidebar = ({ setMobileOpen }) => {
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
@@ -42,7 +43,7 @@ function Sidebar({ setMobileOpen }) {
         <img
           className={classes.image}
           src={theme.palette.mode === "light" ? redLogo : blueLogo}
-          alt="filmpire logo"
+          alt="Filmpire logo"
         />
       </Link>
       <Divider />
@@ -50,7 +51,10 @@ function Sidebar({ setMobileOpen }) {
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button>
+            <ListItem
+              onClick={() => dispatch(selectGenreOrCategory(value))}
+              button
+            >
               <ListItemIcon>
                 <img
                   src={genresIcons[label.toLowerCase()]}
@@ -73,7 +77,10 @@ function Sidebar({ setMobileOpen }) {
         ) : (
           data.genres.map(({ name, id }) => (
             <Link key={name} className={classes.links} to="/">
-              <ListItem onClick={() => {}} button>
+              <ListItem
+                onClick={() => dispatch(selectGenreOrCategory(id))}
+                button
+              >
                 <ListItemIcon>
                   <img
                     src={genresIcons[name.toLowerCase()]}
@@ -89,6 +96,6 @@ function Sidebar({ setMobileOpen }) {
       </List>
     </>
   );
-}
+};
 
 export default Sidebar;
