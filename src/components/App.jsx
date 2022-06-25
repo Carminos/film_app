@@ -5,7 +5,7 @@ import { Actors, MovieInformation, Movies, Navbar, Profile } from "./";
 import useStyles from "./styles";
 
 const App = () => {
-  // Use 'useStyles' as a hoook, so change from an instant return to a normal function block
+  // Use 'useStyles' as a hook, so change from an instant return to a normal function block
   const classes = useStyles();
   return (
     <div className={classes.root}>
